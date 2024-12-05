@@ -12,6 +12,13 @@ def calcular_pontuacao(cartas):
 def exibir_cartas(jogador, cartas, total):
     print(f"{jogador} tem as cartas: {cartas} | Pontuação: {total}")
 
+def obter_resposta_valida(mensagem):
+    while True:
+        resposta = input(mensagem).lower()
+        if resposta in ('s', 'n'):
+            return resposta
+        print("Por favor, digite apenas 's' para sim ou 'n' para não.")
+
 def jogo_21():
     print("\nBem-vindo ao Jogo 21!")
     jogador_cartas = [distribuir_carta(), distribuir_carta()]
@@ -23,8 +30,7 @@ def jogo_21():
     # Turno do jogador
     while jogador_pontuacao < 21:
         exibir_cartas("Jogador", jogador_cartas, jogador_pontuacao)
-        continuar = input("Deseja pegar outra carta? (s/n): ").lower()
-        if continuar == 's':
+        if obter_resposta_valida("Pegar outra carta? (s/n): ") == 's':
             jogador_cartas.append(distribuir_carta())
             jogador_pontuacao = calcular_pontuacao(jogador_cartas)
         else:
@@ -50,12 +56,9 @@ def jogo_21():
         print("O Computador venceu. Tente novamente!")
 
 def main():
-    while True:
+    while obter_resposta_valida("\nVocê deseja jogar? (s/n): ") == 's':
         jogo_21()
-        resposta = input("\nVocê deseja jogar novamente? (s/n): ").lower()
-        if resposta != 's':
-            print("Obrigado por jogar! Até a próxima.")
-            break
+    print("--- Obrigado por jogar! ---")
 
 # Executar o jogo
 if __name__ == "__main__":
